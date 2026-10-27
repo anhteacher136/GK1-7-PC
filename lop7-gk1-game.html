@@ -1,0 +1,321 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Game ôn thi giữa kì 1 – Tiếng Anh 7 – Tiếng Anh Cô Ánh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap">
+<style>
+:root{--bg:#EEF5FF;--bg2:#DCEAFF;--card:#fff;--soft:#F5F9FF;--blue:#2F7DE1;--blue-d:#1A56A8;--blue-l:#CFE2FF;--line:#BCD5F5;--ink:#1E2A3B;--muted:#5E7189;--gold:#F2B53A;--ok:#23946A;--ok-bg:#E4F7EE;--bad:#D63F5C;--bad-bg:#FFE6EA;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Lexend",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5;min-height:100vh;
+ background-image:radial-gradient(circle at 10% 6%,#D4E6FF 0 90px,transparent 91px),radial-gradient(circle at 94% 20%,#E2EEFF 0 130px,transparent 131px);background-attachment:fixed}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:16px 16px 48px}
+.hero{background:linear-gradient(135deg,#6BAAF5 0%,#2F7DE1 55%,#1E5FC2 100%);color:#fff;border-radius:26px;padding:22px 22px 20px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:170px;height:170px;border-radius:50%;background:rgba(255,255,255,.14)}
+.brand{font-weight:700;font-size:15px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.9;margin-top:6px}
+.hero h1{margin:4px 0 0;font-size:clamp(26px,6vw,38px);font-weight:800;line-height:1.1}
+.hero p{margin:8px 0 0;font-weight:300;max-width:56ch;position:relative;z-index:1}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:20px;padding:18px;margin-top:16px}
+.card h2{margin:0 0 10px;font-size:19px;color:var(--blue-d)}
+.fields{display:grid;grid-template-columns:1fr 130px;gap:10px}
+@media(max-width:520px){.fields{grid-template-columns:1fr}}
+label.f{display:block;font-size:13px;font-weight:600;color:var(--blue-d);margin-bottom:4px}
+.fields input{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--soft)}
+.fields input:focus{outline:none;border-color:var(--blue)}
+.err{color:var(--bad);font-size:13px;margin-top:6px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.mode{text-align:left;border:2px solid var(--line);background:var(--soft);border-radius:16px;padding:12px 14px;cursor:pointer;transition:transform .1s,border-color .15s}
+.mode:hover{border-color:var(--blue);transform:translateY(-2px)}
+.mode b{display:block;color:var(--blue-d);font-size:16px}
+.mode span{font-size:13px;color:var(--muted)}
+.mode.big{background:linear-gradient(135deg,#FFF6DD,#FFEBB5);border-color:#F4D27A}
+.mode.big b{color:#8A5A00}
+.best{font-size:13px;color:var(--muted);margin-top:10px}
+.rules{margin:0;padding-left:18px;font-size:14px;color:var(--muted)}
+.rules b{color:var(--ink)}
+/* game */
+.hud{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(238,245,255,.95);backdrop-filter:blur(6px);padding:10px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.pill{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:4px 12px;font-weight:600;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill.score{color:var(--blue-d)}
+.pill.combo{background:var(--gold);border-color:#E0A21F;color:#5A3A00}
+.hearts{letter-spacing:2px}
+.grow{flex:1}
+.timer{height:10px;border-radius:99px;background:var(--bg2);overflow:hidden;margin-top:12px}
+.timer i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#23946A,#F2B53A);transition:width .25s linear}
+.timer.low i{background:var(--bad)}
+.qcard{background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:18px;margin-top:12px}
+.qmeta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);font-weight:600}
+.qmeta .cat{background:var(--blue-l);color:var(--blue-d);border-radius:8px;padding:1px 8px}
+.qtext{font-size:19px;font-weight:600;margin:10px 0 4px}
+.passage{background:linear-gradient(180deg,#FFF9E9,#FFF4DA);border:1.5px solid #F4DDA0;border-radius:14px;margin:10px 0;font-size:15px}
+.passage summary{cursor:pointer;padding:10px 14px;font-weight:600;color:var(--blue-d)}
+.passage div{padding:0 14px 8px}
+.passage p{margin:0 0 8px}
+.opts{display:grid;gap:8px;margin-top:12px}
+.opts.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:480px){.opts.grid4{grid-template-columns:1fr}}
+.opt{display:flex;gap:10px;align-items:center;text-align:left;border:2px solid var(--line);background:var(--soft);border-radius:14px;padding:11px 12px;cursor:pointer;font-size:16px;transition:transform .08s,background .15s,border-color .15s;min-height:52px}
+.opt:hover:not(:disabled){border-color:var(--blue);transform:translateY(-1px)}
+.opt .l{flex:none;width:28px;height:28px;border-radius:9px;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.opt b{color:var(--blue-d);text-decoration:underline;text-underline-offset:3px}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--ok-bg);border-color:var(--ok)}
+.opt.right .l{background:var(--ok)}
+.opt.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.opt.wrong .l{background:var(--bad)}
+.opt.gone{opacity:.25}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.pop{animation:pop .35s}
+@keyframes pop{50%{transform:scale(1.04)}}
+.helps{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.help{border:1.5px dashed var(--line);background:#fff;border-radius:12px;padding:6px 12px;font-size:14px;font-weight:600;color:var(--blue-d);cursor:pointer}
+.help:disabled{opacity:.35;cursor:default}
+.fb{margin-top:12px;border-radius:14px;padding:12px 14px;font-size:15px}
+.fb.ok{background:var(--ok-bg)} .fb.bad{background:var(--bad-bg)}
+.fb .v{font-weight:700} .fb.ok .v{color:var(--ok)} .fb.bad .v{color:var(--bad)}
+.fb .gain{float:right;font-weight:800;color:var(--ok)}
+.btn{border:0;border-radius:14px;padding:12px 24px;font-weight:700;cursor:pointer;font-size:17px}
+.btn-main{background:var(--blue);color:#fff;box-shadow:0 5px 0 var(--blue-d)}
+.btn-main:active{transform:translateY(3px);box-shadow:0 2px 0 var(--blue-d)}
+.btn-ghost{background:#fff;border:2px solid var(--line);color:var(--blue-d)}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.float{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%);font-size:34px;font-weight:800;color:var(--ok);pointer-events:none;animation:up 0.9s forwards;z-index:50;text-shadow:0 2px 0 #fff}
+@keyframes up{to{transform:translate(-50%,-140%);opacity:0}}
+/* end */
+.end-top{background:linear-gradient(135deg,#6BAAF5,#2F7DE1);color:#fff;border-radius:22px;padding:20px;text-align:center}
+.stars{font-size:40px;letter-spacing:6px}
+.big{font-size:52px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:12px}
+.stat{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:13px;text-align:center}
+.stat b{display:block;font-size:20px;color:var(--blue-d);font-variant-numeric:tabular-nums}
+.notebook{background:#FFFBE8;border:2px solid var(--gold);border-radius:16px;padding:14px 16px;margin-top:14px}
+.notebook h3{margin:0 0 6px;color:#9A6A00;font-size:17px}
+.notebook ol{margin:0;padding-left:20px;font-size:14.5px}
+.notebook li{margin-bottom:8px}
+.notebook .why{color:var(--muted);font-size:13.5px}
+.sendst{margin-top:12px;font-size:14px;font-weight:600;text-align:center}
+footer{margin-top:30px;text-align:center;font-size:13px;color:var(--muted)}
+footer b{color:var(--blue-d)}
+.sound{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:4px 10px;cursor:pointer;font-size:14px}
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:60}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<canvas id="fx"></canvas>
+<div class="wrap">
+ <header class="hero">
+  <div class="brand">🌸 Tiếng Anh Cô Ánh</div>
+  <div class="eyebrow">Tiếng Anh 7 · Global Success · Ôn thi giữa kì 1</div>
+  <h1>🏆 Đấu trường đề cương</h1>
+  <p>Trả lời nhanh để được thưởng điểm thời gian, trả lời đúng liên tiếp để nhân combo. Câu nào sai có lời giải ngay để em nhớ lâu.</p>
+ </header>
+ <main id="app"></main>
+ <footer><b>Tiếng Anh Cô Ánh</b> · Game ôn tập · Đề cương giữa kì 1 · Tiếng Anh 7 Global Success</footer>
+</div>
+<script>
+const DATA = {"Q": [{"c": "A", "q": "Chọn từ có phần in đậm phát âm khác", "o": ["d<b>ir</b>ty", "flow<b>er</b>", "g<b>ir</b>l", "b<b>ur</b>n"], "a": 1, "e": "\"flower\" /ˈflaʊə/: er đọc /ə/. dirty /ˈdɜːti/, girl /ɡɜːl/, burn /bɜːn/: đọc /ɜː/."}, {"c": "A", "q": "Chọn từ có phần in đậm phát âm khác", "o": ["<b>ear</b>ly", "b<b>ir</b>d", "moth<b>er</b>", "w<b>or</b>k"], "a": 2, "e": "\"mother\" /ˈmʌðə/: er đọc /ə/. early /ˈɜːli/, bird /bɜːd/, work /wɜːk/: đọc /ɜː/."}, {"c": "A", "q": "Chọn từ có phần in đậm phát âm khác", "o": ["c<b>o</b>llect", "l<b>ear</b>n", "s<b>ur</b>f", "th<b>ir</b>teen"], "a": 0, "e": "\"collect\" /kəˈlekt/: o không nhấn đọc /ə/. learn /lɜːn/, surf /sɜːf/, thirteen /ˌθɜːˈtiːn/: đọc /ɜː/."}, {"c": "A", "q": "Chọn từ có phần in đậm phát âm khác", "o": ["water<b>ed</b>", "laugh<b>ed</b>", "help<b>ed</b>", "cook<b>ed</b>"], "a": 0, "e": "\"watered\" đọc /d/ (water kết thúc bằng nguyên âm /ə/). laughed (gh đọc /f/), helped (/p/), cooked (/k/) kết thúc bằng âm vô thanh nên -ed đọc /t/."}, {"c": "A", "q": "Chọn từ có phần in đậm phát âm khác", "o": ["yog<b>a</b>", "<b>a</b>round", "c<b>o</b>llect", "homew<b>or</b>k"], "a": 3, "e": "\"homework\" /ˈhəʊmwɜːk/: or đọc /ɜː/. yoga /ˈjəʊɡə/, around /əˈraʊnd/, collect /kəˈlekt/: phần in đậm đọc /ə/."}, {"c": "A", "q": "Chọn từ có phần in đậm phát âm khác", "o": ["c<b>o</b>llect", "pr<b>o</b>vide", "d<b>o</b>nate", "c<b>o</b>ntrol"], "a": 2, "e": "\"donate\" /dəʊˈneɪt/: o đọc /əʊ/. collect /kəˈlekt/, provide /prəˈvaɪd/, control /kənˈtrəʊl/: o đọc /ə/."}, {"c": "A", "q": "Chọn từ có phần in đậm phát âm khác", "o": ["water<b>ed</b>", "believ<b>ed</b>", "open<b>ed</b>", "stopp<b>ed</b>"], "a": 3, "e": "\"stopped\" đọc /t/ (sau âm vô thanh /p/). watered, believed (/v/), opened (/n/) đọc /d/."}, {"c": "A", "q": "Chọn từ có phần in đậm phát âm khác", "o": ["want<b>ed</b>", "walk<b>ed</b>", "end<b>ed</b>", "plant<b>ed</b>"], "a": 1, "e": "\"walked\" đọc /t/ (sau /k/). wanted, ended, planted đọc /ɪd/ vì gốc kết thúc bằng t, d."}, {"c": "A", "q": "Chọn từ có trọng âm khác", "o": ["benefit", "volunteer", "orphanage", "elderly"], "a": 1, "e": "volunteer /ˌvɒlənˈtɪə/ nhấn âm 3 (đuôi -eer nhận trọng âm). 'benefit, 'orphanage, 'elderly nhấn âm 1."}, {"c": "A", "q": "Chọn từ có trọng âm khác", "o": ["unusual", "popular", "valuable", "patient"], "a": 0, "e": "unusual /ʌnˈjuːʒuəl/ nhấn âm 2 (tiền tố un- không nhận trọng âm). 'popular, 'valuable, 'patient nhấn âm 1."}, {"c": "A", "q": "Chọn từ có trọng âm khác", "o": ["unhealthy", "healthy", "homeless", "rural"], "a": 0, "e": "unhealthy /ʌnˈhelθi/ nhấn âm 2. 'healthy, 'homeless, 'rural nhấn âm 1."}, {"c": "A", "q": "Chọn từ có trọng âm khác", "o": ["protein", "maturity", "vitamin", "teenager"], "a": 1, "e": "maturity /məˈtʃʊərəti/ nhấn âm 2 (trước đuôi -ity). 'protein, 'vitamin, 'teenager nhấn âm 1."}, {"c": "A", "q": "Chọn từ có trọng âm khác", "o": ["provide", "collect", "tutor", "donate"], "a": 2, "e": "tutor /ˈtjuːtə/ là danh từ, nhấn âm 1. pro'vide, col'lect, do'nate là động từ, nhấn âm 2."}, {"c": "A", "q": "Chọn từ có trọng âm khác", "o": ["avoid", "tutor", "believe", "receive"], "a": 1, "e": "tutor /ˈtjuːtə/ nhấn âm 1. a'void, be'lieve, re'ceive là động từ, nhấn âm 2."}, {"c": "A", "q": "Chọn từ có trọng âm khác", "o": ["vitamin", "orphanage", "maturity", "benefit"], "a": 2, "e": "maturity /məˈtʃʊərəti/ nhấn âm 2. 'vitamin, 'orphanage, 'benefit nhấn âm 1."}, {"c": "A", "q": "Chọn từ có trọng âm khác", "o": ["sunburn", "dollhouse", "cardboard", "disease"], "a": 3, "e": "disease /dɪˈziːz/ nhấn âm 2. 'sunburn, 'dollhouse, 'cardboard là danh từ ghép, nhấn âm 1."}, {"c": "B", "q": "You should have eight ______ of sleep daily.", "o": ["times", "hours", "weeks", "days"], "a": 1, "e": "\"eight hours of sleep\" = 8 tiếng ngủ mỗi ngày (daily)."}, {"c": "B", "q": "What does he do to help the community?", "o": ["Plant trees", "Do his homework", "Work hard", "Play games"], "a": 0, "e": "Câu hỏi: Anh ấy làm gì để giúp cộng đồng? → Trồng cây (plant trees) là hoạt động phục vụ cộng đồng (community service). Các lựa chọn còn lại là việc cá nhân."}, {"c": "B", "q": "Jim enjoys ______ models of cars in his free time.", "o": ["to make", "make", "making", "makes"], "a": 2, "e": "enjoy + V-ing: enjoys making models (thích làm mô hình)."}, {"c": "B", "q": "My Physics lesson ______ at 8.45 in the morning.", "o": ["start", "is starting", "started", "starts"], "a": 3, "e": "Thời khóa biểu, lịch trình cố định → hiện tại đơn. Chủ ngữ My Physics lesson số ít → starts."}, {"c": "B", "q": "They often take care ______ the plants in their school garden.", "o": ["at", "of", "for", "after"], "a": 1, "e": "Cụm cố định take care of = chăm sóc. (Nếu dùng after thì phải là look after.)"}, {"c": "B", "q": "Outdoor activities are good ______ our health.", "o": ["at", "with", "for", "in"], "a": 2, "e": "be good for = tốt cho. (be good at = giỏi về.)"}, {"c": "B", "q": "Children should ______ fast food and soft drinks.", "o": ["affect", "exercise", "keep", "avoid"], "a": 3, "e": "avoid = tránh. Trẻ em nên tránh đồ ăn nhanh và nước ngọt."}, {"c": "B", "q": "I'm always on a diet because I ______ on weight easily.", "o": ["put", "cause", "affect", "keep"], "a": 0, "e": "put on weight = tăng cân. Vì dễ tăng cân nên lúc nào cũng ăn kiêng."}, {"c": "B", "q": "What ______ your mother often ______ in her free time?", "o": ["do / does", "do / do", "does / do", "does / does"], "a": 2, "e": "Chủ ngữ your mother (ngôi 3 số ít) → trợ động từ does, động từ chính giữ nguyên mẫu do: What does your mother often do…?"}, {"c": "B", "q": "Choose the word CLOSEST in meaning to DONATED: My school DONATED a lot of old clothes to the people in the flood last month.", "o": ["give", "gave", "sold", "sell"], "a": 1, "e": "donate = tặng, quyên góp ≈ give. Có \"last month\" → quá khứ: gave. sold/sell = bán, sai nghĩa."}, {"c": "B", "q": "He ______ learn about the environment in his school last year.", "o": ["didn't", "isn't", "doesn't", "don't"], "a": 0, "e": "\"last year\" → quá khứ đơn. Phủ định: didn't + V nguyên mẫu (didn't learn)."}, {"c": "B", "q": "Vegetables and fruit have a lot of ______.", "o": ["proteins", "problems", "causes", "vitamins"], "a": 3, "e": "Rau và trái cây chứa nhiều vitamin (vitamins)."}, {"c": "B", "q": "______ do you watch TV? – Sometimes on Sundays.", "o": ["How often", "What", "When", "How"], "a": 0, "e": "Câu trả lời \"Sometimes on Sundays\" chỉ tần suất → hỏi bằng How often (bao lâu một lần)."}, {"c": "B", "q": "They exchanged used paper ______ notebooks last summer.", "o": ["to", "with", "at", "for"], "a": 3, "e": "exchange A for B = đổi A lấy B: đổi giấy đã qua sử dụng lấy vở."}, {"c": "B", "q": "Choose the word CLOSEST in meaning to RUBBISH: She usually picks up RUBBISH around her school.", "o": ["playground", "clothes", "litter", "vegetables"], "a": 2, "e": "rubbish = rác ≈ litter (rác vứt bừa bãi)."}, {"c": "B", "q": "The weather may affect our ______.", "o": ["red spot", "sunburn", "soft drink", "skin condition"], "a": 3, "e": "Thời tiết có thể ảnh hưởng đến tình trạng da (skin condition). Sau our cần một danh từ chỉ thứ thuộc về cơ thể ta và hợp nghĩa."}, {"c": "B", "q": "______ people usually live on the streets, under bridges, or in camps.", "o": ["Lonely", "Homeless", "Elderly", "Disabled"], "a": 1, "e": "homeless = vô gia cư: sống trên đường phố, dưới gầm cầu, trong lều trại."}, {"c": "B", "q": "Some of a vegetarian's main foods are ______ and vegetables.", "o": ["meat", "beef", "tofu", "fish"], "a": 2, "e": "Người ăn chay (vegetarian) không ăn thịt, cá → đậu phụ (tofu) là món chính."}, {"c": "B", "q": "Soft drinks can be ______ to children's teeth.", "o": ["fit", "active", "harmful", "fresh"], "a": 2, "e": "be harmful to = có hại cho. Nước ngọt có hại cho răng trẻ em."}, {"c": "B", "q": "Find the mistake: Doing exercises (A) is one (B) of the key (C) components of a health (D) lifestyle.", "o": ["Doing exercises", "one", "key", "health"], "a": 3, "e": "Lỗi sai: health → healthy. Trước danh từ lifestyle cần tính từ: a healthy lifestyle (lối sống lành mạnh).", "fix": 1}, {"c": "B", "q": "A: \"Let's go to the cinema this weekend.\" – B: \"______\"", "o": ["I see, thanks.", "Sounds great!", "I'm not interested in it.", "Yes, very much."], "a": 1, "e": "Đáp lại lời rủ \"Let's…\" một cách đồng ý: Sounds great! (Nghe hay đấy!). C từ chối nhưng thiếu lịch sự; A, D không hợp ngữ cảnh."}, {"c": "B", "q": "I can't fasten my jeans – I'll have to ______.", "o": ["eat more junk food", "go out regularly", "see my doctor", "go on a diet"], "a": 3, "e": "Không cài được khuy quần jeans → bị béo lên → phải ăn kiêng: go on a diet."}, {"c": "B", "q": "\"I think model making is an expensive hobby.\" – \"______ It's incredibly cheap.\"", "o": ["You're right.", "Certainly.", "No matter.", "Not at all."], "a": 3, "e": "Vế sau \"It's incredibly cheap\" (nó cực kì rẻ) phản bác ý kiến \"đắt\" → Not at all (Không hề). You're right / Certainly là đồng ý nên sai."}, {"c": "B", "q": "\"I think I have the flu.\" – \"______\"", "o": ["Apply suncream every 2 hours.", "Don't read in dim light.", "Get rest and drink plenty of water.", "Do more exercise and eat less fatty food."], "a": 2, "e": "Bị cúm (the flu) → lời khuyên hợp lý: nghỉ ngơi và uống nhiều nước. A dành cho cháy nắng, B cho mắt, D cho người béo."}, {"c": "C", "q": "Biển báo: 🚫 hình ly rượu 🍷 và chiếc ô tô 🚗 trong vòng tròn bị gạch chéo. What does the sign say?", "o": ["You must be careful with drunk drivers.", "You shouldn't carry glasses in your car.", "You should be careful as there is a pub ahead.", "You mustn't drive if you drink alcohol."], "a": 3, "e": "Vòng tròn gạch chéo trên hình ly rượu và ô tô = cấm uống rượu bia khi lái xe → You mustn't drive if you drink alcohol."}, {"c": "C", "q": "Biển báo: 😷 \"FACE MASKS REQUIRED\". What does the sign say?", "o": ["Only students need to wear face masks.", "You should only wear face masks during lunchtime.", "You must wear a face mask in this area.", "Face masks are optional if you feel healthy."], "a": 2, "e": "required = bắt buộc → You must wear a face mask in this area. D sai vì optional = không bắt buộc."}, {"c": "C", "q": "Biển báo: 👨‍👩‍👧 \"CHILDREN ONLY WITH PARENTS\". What does the sign say?", "o": ["Children can enter this place alone.", "Children can't play in this area.", "Only children can enter this place.", "Children can't enter this area without their parents."], "a": 3, "e": "\"Children only with parents\" = trẻ em chỉ được vào khi có bố mẹ đi cùng → không có bố mẹ thì không được vào."}, {"c": "C", "q": "44. My Favorite Hobby", "o": ["a – b – c", "b – a – c", "c – a – b", "b – c – a"], "a": 0, "e": "a kể lúc bắt đầu học (hai năm trước) → b thói quen hiện nay (thường chơi lúc rảnh) → c cảm nhận, lợi ích để kết đoạn.", "p": "C2"}, {"c": "C", "q": "45. Healthy Eating Habits", "o": ["a – b – c", "b – a – c", "c – a – b", "b – c – a"], "a": 3, "e": "b nêu lợi ích của ăn uống lành mạnh → c lời khuyên thứ nhất (ăn đa dạng) → a bắt đầu bằng \"Moreover\" (hơn nữa) nên là lời khuyên bổ sung, đứng sau cùng.", "p": "C2"}, {"c": "D", "q": "(1)", "o": ["shape", "fit", "health", "condition"], "a": 1, "e": "keep fit = giữ dáng, khỏe mạnh. (keep in shape mới đúng, thiếu \"in\" nên A sai.)", "p": "D1"}, {"c": "D", "q": "(2)", "o": ["provide", "provides", "provided", "providing"], "a": 0, "e": "Chủ ngữ They (số nhiều), nói về sự thật → hiện tại đơn: provide.", "p": "D1"}, {"c": "D", "q": "(3)", "o": ["get in", "take up", "put on", "put in"], "a": 2, "e": "put on weight = tăng cân. Ăn thịt, trứng, phô mai quá nhiều có thể tăng cân.", "p": "D1"}, {"c": "D", "q": "(4)", "o": ["like", "likes", "liked", "liking"], "a": 0, "e": "like = như là (giới từ, giống such as) dùng để liệt kê ví dụ: cycling, swimming…", "p": "D1"}, {"c": "D", "q": "(5)", "o": ["tire", "tired", "tiring", "tires"], "a": 1, "e": "feel + tính từ đuôi -ed chỉ cảm giác của người: feel tired (cảm thấy mệt). tiring = gây mệt.", "p": "D1"}, {"c": "D", "q": "6. What is the main idea of the passage?", "o": ["Voluntary work is only for young people.", "Voluntary work is for everyone at different ages.", "Voluntary work is difficult and boring.", "Voluntary work is only done in clubs."], "a": 1, "e": "Câu đầu: công việc tình nguyện thu hút nhiều người ở các độ tuổi khác nhau (from different age groups) vì lợi ích lớn → dành cho mọi lứa tuổi.", "p": "D2"}, {"c": "D", "q": "7. Which of the following is NOT true according to the passage?", "o": ["Voluntary work helps people develop social skills.", "Volunteers learn how to work in teams.", "Voluntary work is only for adults.", "Voluntary work can help people travel and explore."], "a": 2, "e": "Bài nói người tham gia ở nhiều độ tuổi, kể cả thanh thiếu niên (adolescents) → \"only for adults\" là SAI. A, B, D đều có trong bài.", "p": "D2"}, {"c": "D", "q": "8. Why does voluntary work attract people from different age groups?", "o": ["Because it is easy and doesn't require effort.", "Because it offers many benefits and opportunities.", "Because it is only for young people.", "Because it is done only once a year."], "a": 1, "e": "\"…because of its huge benefits\" → vì nó mang lại nhiều lợi ích và cơ hội.", "p": "D2"}, {"c": "D", "q": "9. The word \"adolescents\" in the passage refers to ______.", "o": ["Old people", "Teenagers", "Children under 5", "Adults over 30"], "a": 1, "e": "adolescents = thanh thiếu niên ≈ teenagers.", "p": "D2"}, {"c": "D", "q": "10. The word \"valuable\" in the passage is OPPOSITE in meaning to ______.", "o": ["useless", "important", "cheap", "easy"], "a": 0, "e": "valuable = quý giá, có giá trị >< useless = vô dụng. important là từ gần nghĩa, không phải trái nghĩa.", "p": "D2"}, {"c": "D", "q": "11. According to the passage, what is one benefit of voluntary work?", "o": ["It helps you learn how to work alone.", "It helps you travel and meet new people.", "It teaches you to avoid difficulties.", "It stops you from making friends."], "a": 1, "e": "\"…make many new friends…\" và \"have a chance to travel more\" → giúp đi du lịch và gặp gỡ bạn mới. A sai vì bài nói làm việc nhóm (work in a team).", "p": "D2"}, {"c": "D", "q": "12. Melbourne City Mission is a volunteering organization.", "o": ["True", "False"], "a": 0, "e": "TRUE. Melbourne City Mission kêu gọi mọi người đến làm tình nguyện viên giúp người khó khăn → đây là một tổ chức tình nguyện.", "p": "D3", "fix": 1}, {"c": "D", "q": "13. Anyone under 18 can join the organization.", "o": ["True", "False"], "a": 1, "e": "FALSE. Bài đọc: \"Anyone over 18 can volunteer with us\" → phải trên 18 tuổi, không phải dưới 18.", "p": "D3", "fix": 1}, {"c": "D", "q": "14. Volunteers can make a difference when they share time, skills, knowledge.", "o": ["True", "False"], "a": 0, "e": "TRUE. \"You can share your time, skills, knowledge and networks, and make a positive change.\" (make a difference = make a positive change).", "p": "D3", "fix": 1}, {"c": "D", "q": "15. Volunteers here can help disabled or elderly people.", "o": ["True", "False"], "a": 0, "e": "TRUE. Tình nguyện viên thăm người già ở viện dưỡng lão (Aged Care Home) và hỗ trợ người khuyết tật (disabled people).", "p": "D3", "fix": 1}, {"c": "D", "q": "16. Volunteers will work with the organization once only.", "o": ["True", "False"], "a": 1, "e": "FALSE. Có cả vị trí làm một lần (one-off) và lâu dài (on-going), không chỉ một lần.", "p": "D3", "fix": 1}, {"c": "E", "q": "1. We / remove / litter / public areas / such as / streets / parks.", "o": ["We removed litter from public areas such as streets and parks.", "We remove litter in public areas such as street and park.", "We removing litter from public areas such as streets and parks.", "We removes litter from public areas such as streets and parks."], "a": 0, "e": "remove sth from = dọn bỏ khỏi; liệt kê ví dụ dùng danh từ số nhiều streets and parks. C thiếu động từ chia, D sai (We không đi với removes)."}, {"c": "E", "q": "2. I / like / do / this activity / because / it / give / me / a chance / contribute / the community.", "o": ["I like doing this activity because it gives me a chance to contribute to the community.", "I like do this activity because it give me a chance contribute the community.", "I likes doing this activity because it gave me a chance to contribute the community.", "I like doing this activity because it give me a chance contributing the community."], "a": 0, "e": "like + V-ing (doing) · it + gives (ngôi 3 số ít) · a chance + to V · contribute to the community (đóng góp cho cộng đồng)."}, {"c": "E", "q": "3. They / donate / old clothes / homeless people / last month.", "o": ["They donate old clothes for homeless people last month.", "They donated old clothes to homeless people last month.", "They donating old clothes to homeless people last month.", "They donates old clothes for homeless people last month."], "a": 1, "e": "\"last month\" → quá khứ đơn: donated. donate sth to sb = tặng cái gì cho ai."}, {"c": "E", "q": "4. your mother / go / to / market / every day?", "o": ["Does your mother goes to the market every day?", "Does your mother go to the market every day?", "Is your mother goes to the market every day?", "Is your mother go to the market every day?"], "a": 1, "e": "Câu hỏi hiện tại đơn: Does + S + V nguyên mẫu? → Does your mother go…? Không dùng Is với động từ thường."}, {"c": "E", "q": "5. He / often / get up / at 5 a.m. / and / go / jogging / in / park.", "o": ["He often gets up at 5 a.m. and go jogging in the park.", "He often get up at 5 a.m. and go jogging in the park.", "He often gets up at 5 a.m. and goes jogging in the park.", "He often gets up at 5 a.m. and go jogging."], "a": 2, "e": "Chủ ngữ He → cả hai động từ nối bằng and đều chia ngôi 3 số ít: gets up … and goes jogging."}, {"c": "E", "q": "6. She eats fruits and veggies every day, but she keeps gaining weight.", "o": ["Although she eats fruits and veggies every day, she keeps gaining weight.", "Although she keeps gaining weight, she eats only fast food.", "Because she eats fruits and veggies every day, she keeps gaining weight.", "Although she doesn't eat fruits, she still gains weight."], "a": 0, "e": "but (nhưng) → Although (mặc dù) + mệnh đề, mệnh đề. C dùng Because (vì) là sai quan hệ nghĩa."}, {"c": "E", "q": "7. It's a good idea to do exercise regularly.", "o": ["You should never do exercise even if it's a good idea.", "You should do exercise regularly.", "You should avoid doing exercise for good health.", "You should not do regular exercise."], "a": 1, "e": "It's a good idea to V = You should V (Bạn nên…)."}, {"c": "E", "q": "8. I find dancing interesting.", "o": ["I think that dancing is interesting.", "I think dancing to be interesting.", "Dancing give me interesting.", "Dancing is good for me."], "a": 0, "e": "find + sth + adj (thấy cái gì thế nào) = think that + sth + is + adj."}, {"c": "E", "q": "9. My sister loves talking to her friends in her free time.", "o": ["My sister enjoys talking to her friends in her free time.", "My sister detests talking to her friends in her free time.", "My sister prefers talking to her friends to being at home.", "My sister rarely talks to her friends in her free time."], "a": 0, "e": "love = enjoy (thích). detest = ghét, rarely = hiếm khi → trái nghĩa."}, {"c": "E", "q": "He is interested in eating fruit after meals. → Chọn câu cùng nghĩa:", "o": ["He likes eating fruit after meals.", "He likes eat fruit after meals.", "He like eating fruit after meals.", "He likes ate fruit after meals."], "a": 0, "e": "be interested in + V-ing = like + V-ing (thích làm gì): He likes eating fruit after meals."}, {"c": "E", "q": "Last week, our school ______ a Mid-autumn festival and raised money. (organise)", "o": ["organised", "organises", "is organising", "organise"], "a": 0, "e": "\"Last week\" → quá khứ đơn: organised (hoặc organized). Vế sau raised cũng ở quá khứ."}, {"c": "E", "q": "Hoa likes planting trees in the spaces around her house. → Câu hỏi đúng:", "o": ["Does Hoa like planting trees in the spaces around her house?", "Do Hoa like planting trees in the spaces around her house?", "Does Hoa likes planting trees in the spaces around her house?", "Is Hoa like planting trees in the spaces around her house?"], "a": 0, "e": "Hiện tại đơn, chủ ngữ ngôi 3 số ít → Does + Hoa + like (bỏ -s) … ?"}, {"c": "E", "q": "How about going to see a football match together? → Câu cùng nghĩa:", "o": ["Let's go to see a football match together.", "Let's going to see a football match together.", "Let's to go to see a football match together.", "Let's we go to see a football match together."], "a": 0, "e": "How about + V-ing? = Let's + V nguyên mẫu: Let's go to see a football match together."}, {"c": "E", "q": "I have a drawing lesson every Tuesday. → Câu phủ định đúng:", "o": ["I don't have a drawing lesson every Tuesday.", "I doesn't have a drawing lesson every Tuesday.", "I don't has a drawing lesson every Tuesday.", "I not have a drawing lesson every Tuesday."], "a": 0, "e": "Chủ ngữ I, động từ thường → don't + V: I don't have a drawing lesson every Tuesday."}, {"c": "E", "q": "Nick eats a lot of sweetened food, so he is becoming fat. → Câu cùng nghĩa:", "o": ["Because Nick eats a lot of sweetened food, he is becoming fat.", "Because Nick is becoming fat, he eats a lot of sweetened food.", "Because Nick eats a lot of sweetened food, so he is becoming fat.", "Because of Nick eats a lot of sweetened food, he is becoming fat."], "a": 0, "e": "so (nên) chỉ kết quả → Because (vì) đặt trước nguyên nhân: Because Nick eats a lot of sweetened food, he is becoming fat."}, {"c": "E", "q": "We started this project LAST MONDAY. → Đặt câu hỏi cho phần viết HOA:", "o": ["When did you start this project?", "When do you start this project?", "When did you started this project?", "What did you start last Monday?"], "a": 0, "e": "LAST MONDAY chỉ thời gian trong quá khứ → When did + S + V nguyên mẫu? Chủ ngữ We đổi thành you khi hỏi: When did you start this project?"}, {"c": "E", "q": "We eat a lot of rice. We eat a lot of vegetables. → Câu đơn đúng:", "o": ["We eat a lot of rice and vegetables.", "We eat a lot of rice or vegetables.", "We eats a lot of rice and vegetables.", "We eat a lot of rice, we eat vegetables."], "a": 0, "e": "Hai câu giống nhau phần đầu → nối hai tân ngữ bằng and: We eat a lot of rice and vegetables."}, {"c": "E", "q": "You are active, and your sister is active too. → Câu đơn đúng:", "o": ["Both you and your sister are active.", "Both you and your sister is active.", "Both you or your sister are active.", "Both you and your sister active."], "a": 0, "e": "Both A and B + động từ số nhiều: Both you and your sister are active."}], "P": {"C2": {"t": "Đọc hai đoạn văn sau", "p": ["44. My Favorite Hobby — Playing the piano is my favorite hobby. ……  (a) I started learning how to play the piano two years ago.  (b) I often play the piano in my free time.  (c) It helps me relax and makes me happy.", "45. Healthy Eating Habits — Having a healthy diet is important. ……  (a) Moreover, you should drink enough water and shouldn't eat too many fried foods.  (b) Eating healthy helps you stay strong and active.  (c) It is important to eat a variety of foods, such as fruits, vegetables, and grains."]}, "D1": {"t": "Healthy habits", "p": ["Healthy habits help us keep (1) ______ and avoid disease. Here is some advice. Eat more fruit and vegetables, especially coloured ones like carrots and tomatoes. They (2) ______ a lot of vitamins. Eat meat, eggs, and cheese, but not too much. You may (3) ______ weight. Drink enough water, but not soft drinks. Be active and exercise every day. Do outdoor activities (4) ______ cycling, swimming, or playing sports. They keep you fit. Go to bed early and get about 8 hours of sleep daily, so you will not feel (5) ______. Keep your room tidy and clean. Open windows to let in fresh air and sunshine on fine days."]}, "D2": {"t": "The benefits of voluntary work", "p": ["Nowadays, volunteer work attracts a large number of attendants from different age groups because of its huge benefits. Firstly, voluntary work provides the adolescents many precious opportunities to develop social skills, foster independence and form the ability to deal with difficulties in different situations. Secondly, every member will be taught how to work in a team, the way to make conversation or the responsibility of finishing a task. The experience you gain will be valuable for your future, helping you tackle serious problems in later life. In addition, volunteer work can help us adapt to something new and make many new friends through regular activities of clubs or organizations. We can also have a chance to travel more and explore more interesting things we have not experienced before. In conclusion, it is very good to do voluntary work."]}, "D3": {"t": "Welcome to Melbourne City Mission!", "p": ["Why should you come to us? In Melbourne, one in four people do some kind of volunteer work. People here are generous and they offer time and efforts.", "Come and work as volunteers, you can help people in need. You can share your time, skills, knowledge and networks, and make a positive change. We will do our best to match your interests with our activities.", "We need volunteers to visit residents in an Aged Care Home, to provide friendship and support to disabled people, and volunteers for 3–4 hours per week to assist those with serious illness. We also need volunteers who are mums and dads to help parents who have learning difficulties.", "Anyone over 18 can volunteer with us. We have many positions for you to take: one-off or on-going positions. Get in touch with us on (03) 8625 4444."]}}, "CAT": {"A": "Phát âm & Trọng âm", "B": "Từ vựng & Ngữ pháp", "C": "Biển báo & Sắp xếp", "D": "Đọc hiểu", "E": "Viết câu"}};
+const AUTO_URL = 'https://formsubmit.co/ajax/khuonganh2111@gmail.com';
+const PAGE_T = 'Game Tiếng Anh 7 – Ôn thi giữa kì 1';
+const STORE = 'game-g7-midterm1-v1';
+const LET = ['A','B','C','D'];
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const plain = s => String(s).replace(/<[^>]+>/g,'');
+let ST = (()=>{ try{ return JSON.parse(localStorage.getItem(STORE)||'null') || {}; }catch(e){ return {}; } })();
+const saveST = () => { try{ localStorage.setItem(STORE, JSON.stringify(ST)); }catch(e){} };
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+/* ---------- sound ---------- */
+let AC = null, SOUND = ST.sound !== false;
+function beep(freqs, dur=0.12, type='sine', vol=0.08){
+  if (!SOUND) return;
+  try { AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    freqs.forEach((f,i) => { const o = AC.createOscillator(), g = AC.createGain(); o.type = type; o.frequency.value = f;
+      const t = AC.currentTime + i*dur; g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.0001,t+dur*1.6);
+      o.connect(g).connect(AC.destination); o.start(t); o.stop(t+dur*1.7); });
+  } catch(e){}
+}
+const sndOK = () => beep([660,880],0.09,'triangle');
+const sndBad = () => beep([220,170],0.14,'sawtooth',0.05);
+const sndTick = () => beep([1200],0.03,'square',0.02);
+const sndWin = () => beep([523,659,784,1047],0.12,'triangle');
+
+/* ---------- modes ---------- */
+const MODES = [
+  {id:'challenge', name:'⚡ Thử thách 20 câu', sub:'Câu ngẫu nhiên từ cả đề cương · 3 mạng · có đồng hồ', big:true, pick:()=>shuffle(DATA.Q).slice(0,20), hearts:3},
+  {id:'all', name:'📚 Cả đề cương', sub:'Toàn bộ 79 câu, xáo trộn · không giới hạn mạng', pick:()=>shuffle(DATA.Q), hearts:0},
+  ...Object.keys(DATA.CAT).map(c => ({id:'cat'+c, name:DATA.CAT[c], sub:`${DATA.Q.filter(q=>q.c===c).length} câu · luyện riêng phần này`, pick:()=>shuffle(DATA.Q.filter(q=>q.c===c)), hearts:0}))
+];
+const timeFor = q => q.p ? 45 : (plain(q.q).length + q.o.join('').length > 160 ? 30 : 20);
+
+/* ---------- home ---------- */
+function home(msg){
+  stopTimer(); $('.hero').hidden = false;
+  const best = ST.best || {};
+  $('#app').innerHTML = `
+  <section class="card"><h2>👤 Người chơi</h2>
+    <div class="fields"><div><label class="f" for="nm">Họ và tên *</label><input id="nm" autocomplete="name" placeholder="Ví dụ: Nguyễn Minh Anh" value="${esc(ST.name||'')}"></div>
+    <div><label class="f" for="cl">Lớp</label><input id="cl" placeholder="7A" value="${esc(ST.cls||'')}"></div></div>
+    <div class="err" id="nmErr" ${msg?'':'hidden'}>${msg||''}</div>
+  </section>
+  <section class="card"><h2>🎮 Chọn chế độ chơi</h2>
+    <div class="modes">${MODES.map(m=>`<button class="mode${m.big?' big':''}" data-mode="${m.id}"><b>${esc(m.name)}</b><span>${esc(m.sub)}</span>${best[m.id]?`<span style="display:block;margin-top:4px;color:var(--blue-d);font-weight:600">🏅 Kỷ lục: ${best[m.id]} điểm</span>`:''}</button>`).join('')}</div>
+  </section>
+  <section class="card"><h2>📜 Luật chơi</h2>
+    <ul class="rules">
+      <li>Mỗi câu đúng được <b>100 điểm</b> + <b>thưởng thời gian</b> (5 điểm cho mỗi giây còn lại).</li>
+      <li>Đúng liên tiếp 3 câu: điểm <b>×1.5</b> · 5 câu trở lên: <b>×2</b>. Sai hoặc hết giờ thì mất combo.</li>
+      <li>Mỗi lượt có 2 quyền trợ giúp: <b>50:50</b> (bỏ 2 đáp án sai) và <b>+10 giây</b>.</li>
+      <li>Chơi xong, kết quả tự động gửi cho cô. Câu sai hiện lời giải: em <b>chép vào vở</b> nhé!</li>
+    </ul>
+    <div class="row" style="justify-content:flex-start"><button class="sound" id="snd">${SOUND?'🔊 Âm thanh: bật':'🔈 Âm thanh: tắt'}</button></div>
+  </section>`;
+  $('#snd').onclick = () => { SOUND = !SOUND; ST.sound = SOUND; saveST(); $('#snd').textContent = SOUND?'🔊 Âm thanh: bật':'🔈 Âm thanh: tắt'; };
+  document.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => {
+    const name = $('#nm').value.trim();
+    if (!name){ $('#nmErr').hidden = false; $('#nmErr').textContent = 'Em nhập họ tên trước khi chơi nhé.'; $('#nm').focus(); return; }
+    ST.name = name; ST.cls = $('#cl').value.trim(); saveST();
+    start(MODES.find(m => m.id===b.dataset.mode));
+  });
+  window.scrollTo({top:0});
+}
+
+/* ---------- game ---------- */
+let G = null, TIMER = null;
+function start(mode){
+  G = {mode, qs: mode.pick().map(q => { const idx = q.fix ? q.o.map((_,i)=>i) : shuffle(q.o.map((_,i)=>i)); return {...q, order: idx}; }),
+       i:0, score:0, combo:0, maxCombo:0, right:0, hearts:mode.hearts, wrong:[], fifty:true, plus:true, startT:Date.now(), answered:0};
+  beep([392,523],0.08,'triangle'); $('.hero').hidden = true; show();
+}
+function stopTimer(){ if (TIMER){ clearInterval(TIMER); TIMER = null; } }
+function hud(){
+  return `<div class="hud"><span class="pill">Câu ${G.i+1}/${G.qs.length}</span>
+    <span class="pill score">⭐ ${G.score}</span>
+    ${G.combo>=2?`<span class="pill combo">🔥 Combo ${G.combo}${G.combo>=5?' ×2':G.combo>=3?' ×1.5':''}</span>`:''}
+    <span class="grow"></span>
+    ${G.mode.hearts?`<span class="pill hearts" aria-label="Còn ${G.hearts} mạng">${'❤️'.repeat(G.hearts)}${'🤍'.repeat(G.mode.hearts-G.hearts)}</span>`:''}
+    <button class="pill" id="quit" style="cursor:pointer">✕ Thoát</button></div>`;
+}
+function show(){
+  stopTimer();
+  const q = G.qs[G.i]; G.locked = false; G.total = timeFor(q); G.left = G.total;
+  const long = q.o.some(o => plain(o).length > 28);
+  const pas = q.p ? DATA.P[q.p] : null;
+  $('#app').innerHTML = hud() + `
+  <div class="timer" id="tm"><i id="tmb"></i></div>
+  <section class="qcard pop">
+    <div class="qmeta"><span class="cat">${esc(DATA.CAT[q.c])}</span><span id="tleft">⏱ ${G.left}s</span></div>
+    ${pas?`<details class="passage" ${G.lastP===q.p?'':'open'}><summary>📖 ${esc(pas.t)} (bấm để ẩn/hiện)</summary><div>${pas.p.map(p=>`<p>${esc(p)}</p>`).join('')}</div></details>`:''}
+    <div class="qtext">${esc(q.q)}</div>
+    <div class="opts${long?'':' grid4'}">${q.order.map((oi,k)=>`<button class="opt" data-k="${k}" data-oi="${oi}"><span class="l">${q.fix&&q.o.length===2?(oi?'F':'T'):LET[k]}</span><span>${q.o[oi].includes('<b>')?q.o[oi]:esc(q.o[oi])}</span></button>`).join('')}</div>
+    <div class="helps"><button class="help" id="h50" ${G.fifty&&q.o.length>2?'':'disabled'}>✂️ 50:50</button><button class="help" id="h10" ${G.plus?'':'disabled'}>⏳ +10 giây</button></div>
+    <div id="fb"></div>
+  </section>`;
+  G.lastP = q.p;
+  $('#quit').onclick = () => { if (confirm('Em muốn dừng lượt chơi này? Kết quả các câu đã làm vẫn được tính.')) finish(true); };
+  document.querySelectorAll('.opt').forEach(b => b.onclick = () => answer(+b.dataset.oi, b));
+  $('#h50').onclick = () => { if (!G.fifty || G.locked) return; G.fifty = false; $('#h50').disabled = true;
+    shuffle([...document.querySelectorAll('.opt')].filter(b => +b.dataset.oi !== q.a)).slice(0,2).forEach(b => { b.disabled = true; b.classList.add('gone'); }); beep([500],0.06); };
+  $('#h10').onclick = () => { if (!G.plus || G.locked) return; G.plus = false; $('#h10').disabled = true; G.left += 10; G.total += 10; tick(true); beep([700,900],0.06); };
+  tick(true);
+  TIMER = setInterval(() => { G.left--; tick(); if (G.left <= 0) answer(null, null); }, 1000);
+  window.scrollTo({top:0});
+}
+function tick(silent){
+  const pct = Math.max(0, G.left/G.total*100);
+  $('#tmb').style.width = pct + '%'; $('#tm').classList.toggle('low', G.left <= 5);
+  $('#tleft').textContent = '⏱ ' + Math.max(0,G.left) + 's';
+  if (!silent && G.left <= 5 && G.left > 0) sndTick();
+}
+function answer(oi, btn){
+  if (G.locked) return; G.locked = true; stopTimer(); G.answered++;
+  const q = G.qs[G.i], ok = oi === q.a;
+  document.querySelectorAll('.opt').forEach(b => { b.disabled = true; const v = +b.dataset.oi; if (v===q.a) b.classList.add('right'); else if (v===oi) b.classList.add('wrong'); });
+  $('#h50').disabled = $('#h10').disabled = true;
+  let gain = 0;
+  if (ok){
+    G.combo++; G.maxCombo = Math.max(G.maxCombo, G.combo); G.right++;
+    const mult = G.combo>=5 ? 2 : G.combo>=3 ? 1.5 : 1;
+    gain = Math.round((100 + Math.max(0,G.left)*5) * mult); G.score += gain;
+    sndOK(); floatTxt('+' + gain);
+  } else {
+    G.combo = 0; if (G.mode.hearts) G.hearts--;
+    G.wrong.push({q, your: oi}); sndBad();
+    document.querySelector('.qcard').classList.add('shake');
+  }
+  const keyTxt = (q.fix&&q.o.length===2) ? q.o[q.a] : `${LET[q.order.indexOf(q.a)]}. ${q.o[q.a]}`;
+  const over = G.mode.hearts && G.hearts <= 0, last = G.i >= G.qs.length-1;
+  $('#fb').innerHTML = `<div class="fb ${ok?'ok':'bad'}">${ok?`<span class="gain">+${gain}</span>`:''}<div class="v">${ok?'✓ Chính xác!':(oi===null?'⏰ Hết giờ!':'✗ Chưa đúng')}</div>
+    ${ok?'':`<div><b>Đáp án:</b> ${q.o[q.a].includes('<b>')?keyTxt:esc(keyTxt)}</div>`}<div style="margin-top:4px">${esc(q.e)}</div></div>
+    <div class="row"><button class="btn btn-main" id="next">${over?'Xem kết quả 💔':last?'Xem kết quả 🏁':'Câu tiếp theo →'}</button></div>`;
+  // refresh HUD
+  const h = document.querySelector('.hud'); h.outerHTML = hud(); $('#quit').onclick = () => { if (confirm('Em muốn dừng lượt chơi này?')) finish(true); };
+  $('#next').onclick = () => { if (over || last) finish(false); else { G.i++; show(); } };
+  $('#next').focus({preventScroll:true});
+  $('#fb').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function floatTxt(t){ const d = document.createElement('div'); d.className = 'float'; d.textContent = t; document.body.appendChild(d); setTimeout(()=>d.remove(), 900); }
+
+/* ---------- end ---------- */
+function finish(quit){
+  stopTimer(); $('.hero').hidden = false;
+  const n = G.answered, pct = n ? G.right/n : 0, ten = n ? Math.round(G.right/n*100)/10 : 0;
+  const stars = pct>=0.9 ? 3 : pct>=0.7 ? 2 : pct>=0.5 ? 1 : 0;
+  const mins = Math.round((Date.now()-G.startT)/60000*10)/10;
+  ST.best = ST.best || {}; const newBest = G.score > (ST.best[G.mode.id]||0); if (newBest && n) ST.best[G.mode.id] = G.score; saveST();
+  const msg = stars===3?'Xuất sắc! Em nắm đề cương rất chắc.':stars===2?'Khá tốt! Ôn lại các câu sai là em sẽ đạt điểm cao.':stars===1?'Em cần cố gắng thêm. Chép kỹ các câu sai vào vở nhé.':'Đừng nản! Đọc kỹ lời giải rồi chơi lại em nhé.';
+  $('#app').innerHTML = `
+  <section class="card" style="padding:0;overflow:hidden;border:2px solid var(--blue)">
+   <div class="end-top"><div class="stars">${'★'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+     <div class="big">${G.score}</div><div style="margin-top:4px">điểm · ${esc(G.mode.name)}${newBest&&n?' · 🏅 Kỷ lục mới!':''}</div>
+     <div style="margin-top:6px;font-weight:300">${esc(ST.name)}${ST.cls?' · Lớp '+esc(ST.cls):''} — ${msg}</div></div>
+   <div style="padding:16px">
+     <div class="stats"><div class="stat">Đúng<b>${G.right}/${n}</b></div><div class="stat">Thang 10<b>${ten}</b></div><div class="stat">Combo dài nhất<b>${G.maxCombo}</b></div><div class="stat">Thời gian<b>${mins}′</b></div></div>
+     ${quit&&G.answered<G.qs.length?`<p style="font-size:14px;color:var(--muted);margin:10px 0 0">Em đã dừng ở câu ${G.answered}/${G.qs.length}.</p>`:''}
+     ${G.mode.hearts&&G.hearts<=0?`<p style="font-size:14px;color:var(--bad);font-weight:600;margin:10px 0 0">💔 Hết mạng ở câu ${G.answered}/${G.qs.length}.</p>`:''}
+     ${G.wrong.length?`<div class="notebook"><h3>📒 Chép vào vở: ${G.wrong.length} câu sai</h3><ol>${G.wrong.map(({q,your})=>`<li><b>${esc(plain(q.q))}</b>${q.c==='A'?' ('+q.o.map(plain).join(' / ')+')':''}<br>→ Đáp án: <b style="color:var(--ok)">${esc(plain(q.o[q.a]))}</b>${your===null?' <i>(hết giờ)</i>':` · Em chọn: ${esc(plain(q.o[your]))}`}<div class="why">${esc(q.e)}</div></li>`).join('')}</ol></div>`
+       : (n?`<div class="notebook"><h3>🎉 Không sai câu nào!</h3><p style="margin:0">Em thử chế độ khác hoặc phá kỷ lục của mình nhé.</p></div>`:'')}
+     <div class="sendst" id="sst"></div>
+     <div class="row"><button class="btn btn-main" id="again">🔁 Chơi lại</button><button class="btn btn-ghost" id="menu">🏠 Chọn chế độ khác</button></div>
+   </div></section>`;
+  $('#again').onclick = () => start(G.mode); $('#menu').onclick = () => home();
+  if (stars >= 2) { sndWin(); confetti(); }
+  if (n) send(ten, n, mins, quit);
+  window.scrollTo({top:0});
+}
+function send(ten, n, mins, quit){
+  const st = $('#sst'); st.textContent = '⏳ Đang gửi kết quả cho cô…'; st.style.color = 'var(--muted)';
+  const lines = [`Học sinh: ${ST.name}`, `Lớp: ${ST.cls||'(không ghi)'}`, `Bài: ${PAGE_T}`, `Chế độ: ${G.mode.name}`,
+    `Kết quả: đúng ${G.right}/${n} câu – ${ten}/10 · ${G.score} điểm game · combo dài nhất ${G.maxCombo}`,
+    `Thời gian: ${mins} phút${quit?' (dừng giữa chừng)':''}${G.mode.hearts&&G.hearts<=0?' (hết mạng)':''}`, ''];
+  if (G.wrong.length){ lines.push(`Câu sai (${G.wrong.length}):`); G.wrong.forEach(({q,your}) => lines.push(`- ${plain(q.q)} → em ${your===null?'hết giờ':'chọn: '+plain(q.o[your])} → đáp án: ${plain(q.o[q.a])}`)); }
+  else lines.push('Không sai câu nào.');
+  const subject = `[Tiếng Anh Cô Ánh] ${PAGE_T} – ${G.mode.name} – ${ST.name}${ST.cls?' - Lớp '+ST.cls:''} – ${ten}/10`;
+  fetch(AUTO_URL, {method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body: JSON.stringify({_subject: subject, _template:'box', _captcha:'false', 'Học sinh': ST.name, 'Lớp': ST.cls||'', 'Kết quả': lines.join('\n')})})
+   .then(r => r.json()).then(j => { if (j && (j.success===true || j.success==='true')){ st.textContent = '✅ Kết quả đã tự động gửi tới cô.'; st.style.color = 'var(--ok)'; } else throw 0; })
+   .catch(() => { st.innerHTML = '⚠️ Chưa gửi được (có thể do mạng). Em chụp màn hình kết quả gửi cô qua Zalo nhé.'; st.style.color = 'var(--bad)'; });
+}
+
+/* ---------- confetti ---------- */
+function confetti(){
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const c = $('#fx'), x = c.getContext('2d'); c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#2F7DE1','#F2B53A','#23946A','#6BAAF5','#D63F5C'];
+  const P = Array.from({length:140}, () => ({x:Math.random()*c.width, y:-20-Math.random()*c.height*0.5, r:4+Math.random()*5, vy:2+Math.random()*3, vx:-1.5+Math.random()*3, a:Math.random()*6, col:cols[Math.floor(Math.random()*5)]}));
+  let f = 0; (function loop(){ x.clearRect(0,0,c.width,c.height);
+    P.forEach(p => { p.x += p.vx; p.y += p.vy; p.a += 0.1; x.fillStyle = p.col; x.save(); x.translate(p.x,p.y); x.rotate(p.a); x.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6); x.restore(); });
+    if (++f < 200) requestAnimationFrame(loop); else x.clearRect(0,0,c.width,c.height); })();
+}
+document.addEventListener('keydown', e => {
+  if (!G || !document.querySelector('.opt')) return;
+  const k = e.key.toUpperCase(), i = ['A','B','C','D','1','2','3','4'].indexOf(k);
+  if (i >= 0 && !G.locked){ const b = document.querySelector(`.opt[data-k="${i%4}"]`); if (b && !b.disabled) b.click(); }
+  else if (e.key === 'Enter' && G.locked && $('#next')) { e.preventDefault(); $('#next').click(); }
+});
+home();
+</script></body></html>
